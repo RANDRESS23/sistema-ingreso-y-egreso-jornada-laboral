@@ -1,36 +1,128 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📘 Sistema de Ingreso y Egreso de Jornada Laboral
 
-## Getting Started
+Este proyecto implementa un **sistema completo de control de jornada laboral**, permitiendo que un trabajador:
 
-First, run the development server:
+1. Ingrese un **código único**  
+2. Inicie su jornada con un botón  
+3. Vea un **cronómetro en tiempo real**  
+4. Termine su jornada con otro botón  
+5. Registre automáticamente en base de datos:  
+   - Hora de entrada  
+   - Hora de salida  
+   - Duración total trabajada  
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+El sistema fue diseñado siguiendo buenas prácticas:  
+**código limpio, modular, escalable y con manejo de errores real**.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# 🛠️ Tecnologías Utilizadas
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## **Frontend**
+### **Next.js (App Router)**
+Elegido porque:
+- Permite crear APIs y frontend en un solo entorno.
+- Excelente performance.
+- Arquitectura moderna basada en Server / Client Components.
+- Reduce complejidad en el desarrollo del backend.
 
-## Learn More
+### **TailwindCSS**
+Elegido porque:
+- Permite diseñar interfaces rápidamente.
+- No requiere escribir CSS manual.
+- Perfecto para pruebas técnicas con tiempo limitado.
+- Produce un diseño limpio, consistente y fácil de mantener.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## **Backend**
+### **Next.js API Routes**
+Ventajas:
+- Backend integrado sin necesidad de Express.
+- Código más simple y mantenible.
+- Rápida comunicación con los componentes del frontend.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## **Base de Datos**
+### **SQLite + Prisma ORM**
+Elegido porque:
+- No requiere instalación ni configuración adicional.
+- Ideal para pruebas técnicas y ambientes locales.
+- Prisma facilita:
+  - Queries tipadas
+  - Migraciones
+  - Validación automática
+  - Estructura clara del modelo
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Modelo utilizado:**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```prisma
+model WorkSession {
+  id        Int      @id @default(autoincrement())
+  code      String
+  startTime DateTime
+  endTime   DateTime?
+  totalMs   Int?
+  createdAt DateTime @default(now())
+}
+
+# 🔥 Características del Sistema
+## ✔ Inicio de jornada
+El trabajador ingresa su código y presiona Iniciar Jornada.
+El sistema:
+- Verifica que no exista otra jornada activa
+- Crea un registro en la base de datos
+- Redirige al cronómetro
+
+## ✔ Cronómetro en tiempo real
+- Calculo continuo desde startTime
+- Actualización cada segundo
+- Funciona incluso si se recarga la página
+
+## ✔ Fin de jornada
+El sistema:
+- Busca la jornada activa
+- Registra endTime
+- Calcula totalMs
+- Guarda todo en la base de datos
+
+# 🚨 Manejo de Errores (Requisito de Consigna)
+La consigna pedía al menos dos errores justificados y manejados.
+El proyecto maneja más de dos, pero los principales son:
+
+## ❌ Error 1: Iniciar una jornada ya activa
+Validación en ´´´/api/start´´´.
+Si el código ya tiene una sesión sin cerrar:
+´´´
+{ "error": "Ya tienes una jornada activa" }
+´´´
+- Código: ´´´409 Conflict´´´
+Justificación: evita jornadas duplicadas.
+
+## ❌ Error 2: Finalizar sin tener una jornada activa
+Validación en ´´´/api/end´´´.
+Si el código no tiene una entrada activa:
+´´´
+{ "error": "No tienes una jornada activa" }
+´´´
+- Código: ´´´404 Not Found´´´
+Justificación: evita registros inválidos.
+
+# 🧠 Decisiones Técnicas
+## ✔ Next.js + API Routes
+- Permite fullstack con una sola tecnología
+- Reduce complejidad y depende menos de infraestructura externa
+
+## ✔ Prisma
+- Código más claro
+- Validación automática
+- Migraciones reales
+
+## ✔ SQLite
+- Perfecto para pruebas técnicas
+- Zero-config
+
+## ✔ TailwindCSS
+- Permite avanzar rápido en UI
+- Diseño limpio y consistente
