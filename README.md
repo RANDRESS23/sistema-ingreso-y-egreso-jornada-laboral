@@ -163,7 +163,7 @@ Si el código no tiene una entrada activa:
 
 ```
 git clone https://github.com/RANDRESS23/sistema-ingreso-y-egreso-jornada-laboral.git
-cd sistema-jornada
+cd sistema-ingreso-y-egreso-jornada-laboral
 ```
 
 ## 2. Instalar dependencias
