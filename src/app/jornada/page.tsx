@@ -16,11 +16,9 @@ import confetti from "canvas-confetti";
 import {
   Clock,
   Square,
-  TrendingUp,
   User,
   Timer,
   Award,
-  Coffee,
   Target,
 } from "lucide-react";
 

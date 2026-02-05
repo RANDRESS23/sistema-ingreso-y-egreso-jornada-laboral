@@ -66,6 +66,7 @@ model WorkSession {
   totalMs   Int?
   createdAt DateTime @default(now())
 }
+```
 
 # 🔥 Características del Sistema
 ## ✔ Inicio de jornada
@@ -92,21 +93,21 @@ La consigna pedía al menos dos errores justificados y manejados.
 El proyecto maneja más de dos, pero los principales son:
 
 ## ❌ Error 1: Iniciar una jornada ya activa
-Validación en ´´´/api/start´´´.
+Validación en ```/api/start```.
 Si el código ya tiene una sesión sin cerrar:
-´´´
+```
 { "error": "Ya tienes una jornada activa" }
-´´´
-- Código: ´´´409 Conflict´´´
+```
+- Código: ```409 Conflict```
 Justificación: evita jornadas duplicadas.
 
 ## ❌ Error 2: Finalizar sin tener una jornada activa
-Validación en ´´´/api/end´´´.
+Validación en ```/api/end```.
 Si el código no tiene una entrada activa:
-´´´
+```
 { "error": "No tienes una jornada activa" }
-´´´
-- Código: ´´´404 Not Found´´´
+```
+- Código: ```404 Not Found```
 Justificación: evita registros inválidos.
 
 # 🧠 Decisiones Técnicas
