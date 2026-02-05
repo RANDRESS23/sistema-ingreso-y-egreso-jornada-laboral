@@ -79,6 +79,23 @@ model WorkSession {
 }
 ```
 
+# 🖥️ Interfaces
+## 1. Pantalla de inicio
+
+- Input para código
+- Botón Iniciar Jornada
+- Mensajes de error visibles
+
+<img width="976" height="624" alt="image" src="https://github.com/user-attachments/assets/25f8b9da-9967-47bb-8930-9e702f6a3362" />
+
+## 2. Pantalla de jornada activa
+
+- Cronómetro en tiempo real
+- Botón Finalizar Jornada
+- Mensaje al completar
+
+<img width="643" height="619" alt="image" src="https://github.com/user-attachments/assets/aa29248d-518e-421e-bc38-d43a632eaf7a" align="center" />
+
 # 🔥 Características del Sistema
 
 ## ✔ Inicio de jornada
