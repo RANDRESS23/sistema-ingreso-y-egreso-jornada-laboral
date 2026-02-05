@@ -162,7 +162,7 @@ Si el código no tiene una entrada activa:
 ## 1. Clonar el repo
 
 ```
-git clone https://github.com/usuario/sistema-jornada.git
+git clone https://github.com/RANDRESS23/sistema-ingreso-y-egreso-jornada-laboral.git
 cd sistema-jornada
 ```
 
